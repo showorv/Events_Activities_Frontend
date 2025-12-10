@@ -1,3 +1,4 @@
+import HeroSection from "@/components/modules/home/HeroSection";
 import Head from "next/head";
 
 export default function Home() {
@@ -15,7 +16,7 @@ export default function Home() {
     
     <main>
 
-    <div>Home</div>
+    <HeroSection />
     </main>
     </>
   )
