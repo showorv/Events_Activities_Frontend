@@ -1,15 +1,109 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { cookies } from 'next/headers';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { UserRole, getDefaultDashboardRoute, getRouteOwner, isAuthRoute } from './types/authTypeProxy';
+import { deleteCookie } from './service/auth/tokenHandle';
+
+
+
+
 // This function can be marked `async` if using `await` inside
-export function proxy(request: NextRequest) {
-  return NextResponse.redirect(new URL('/home', request.url))
+export async function proxy(request: NextRequest) {
+   
+    const pathname = request.nextUrl.pathname;
+
+    const accessToken = request.cookies.get("accessToken")?.value || null;
+
+    
+
+    let userRole: UserRole | null = null;
+    // if (accessToken) {
+    //     const verifiedToken: JwtPayload | string = jwt.verify(accessToken, process.env.JWT_SECRET as string);
+
+    //     if (typeof verifiedToken === "string") {
+    //         // cookieStore.delete("accessToken");
+    //         // cookieStore.delete("refreshToken");
+    //         await deleteCookie("accessToken")
+    //         await deleteCookie("refreshToken")
+    //         return NextResponse.redirect(new URL('/login', request.url));
+    //     }
+
+    //     userRole = verifiedToken.role;
+    // }
+    if (accessToken) {
+        try {
+            const verifiedToken = jwt.verify(
+                accessToken,
+                process.env.JWT_SECRET as string
+            ) as JwtPayload;
+
+            userRole = verifiedToken.role as UserRole;
+
+        } catch (err: any) {
+            
+            if (err.name === "TokenExpiredError") {
+                await deleteCookie("accessToken");
+                await deleteCookie("refreshToken");
+            }
+
+            return NextResponse.redirect(new URL("/login", request.url));
+        }
+    }
+
+    const routerOwner = getRouteOwner(pathname);
+    //path = /doctor/appointments => "DOCTOR"
+    //path = /my-profile => "COMMON"
+    //path = /login => null
+
+    const isAuth = isAuthRoute(pathname)
+
+    // Rule 1 : User is logged in and trying to access auth route. Redirect to default dashboard
+    if (accessToken && isAuth) {
+        return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
+    }
+
+
+    // Rule 2 : User is trying to access open public route
+    if (routerOwner === null) {
+        return NextResponse.next();
+    }
+
+    // Rule 1 & 2 for open public routes and auth routes
+
+    if (!accessToken) {
+        const loginUrl = new URL("/login", request.url);
+        loginUrl.searchParams.set("redirect", pathname);
+        return NextResponse.redirect(loginUrl);
+    }
+
+    // Rule 3 : User is trying to access common protected route
+    if (routerOwner === "COMMON") {
+        return NextResponse.next();
+    }
+
+    // Rule 4 : User is trying to access role based protected route
+    if (routerOwner === "ADMIN" || routerOwner === "HOST" || routerOwner === "USER" || routerOwner === "SUPERADMIN") {
+        if (userRole !== routerOwner) {
+            return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
+        }
+    }
+    console.log(userRole);
+
+    return NextResponse.next();
 }
- 
-// Alternatively, you can use a default export:
-// export default function proxy(request: NextRequest) { ... }
- 
-// See "Matching Paths" below to learn more
+
+
+
 export const config = {
-  matcher: '/about/:path*',
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.well-known).*)',
+    ],
 }
