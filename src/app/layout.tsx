@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import LoginSuccessToast from "@/components/modules/shared/loginSuccessToast";
+import LogoutSuccessToast from "@/components/modules/shared/logoutSuccess";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
         {children}
         <Toaster position="top-right" richColors/>
         <LoginSuccessToast />
+        <LogoutSuccessToast />
       </body>
     </html>
   );
