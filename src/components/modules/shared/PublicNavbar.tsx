@@ -148,7 +148,7 @@ interface NavbarProps {
 export default function Navbar({ userInfo }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  console.log(userInfo);
+  console.log(userInfo?.role);
 
   
   
@@ -231,11 +231,11 @@ export default function Navbar({ userInfo }: NavbarProps) {
                 <Image
                   src={userInfo.profileImage || "/default-avatar.png"}
                   alt="avatar"
-                  width={32}
-                  height={32}
+                  width={8}
+                  height={8}
                   className="rounded-full"
                 />
-                <ChevronDown size={16} />
+                <ChevronDown size={8} />
               </button>
 
               {/* Profile Dropdown */}

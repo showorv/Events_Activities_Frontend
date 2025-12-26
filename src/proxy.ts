@@ -58,15 +58,16 @@ export async function proxy(request: NextRequest) {
 
     const isAuth = isAuthRoute(pathname)
 
-    // Rule 1 : User is logged in and trying to access auth route. Redirect to default dashboard
-    if (accessToken && isAuth) {
-        return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
-    }
+   
 
 
     // Rule 2 : User is trying to access open public route
     if (routerOwner === null) {
         return NextResponse.next();
+    }
+     // Rule 1 : User is logged in and trying to access auth route. Redirect to default dashboard
+     if (accessToken && isAuth) {
+        return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
     }
 
     // Rule 1 & 2 for open public routes and auth routes
@@ -83,11 +84,43 @@ export async function proxy(request: NextRequest) {
     }
 
     // Rule 4 : User is trying to access role based protected route
-    if (routerOwner === "ADMIN" || routerOwner === "HOST" || routerOwner === "USER" || routerOwner === "SUPERADMIN") {
-        if (userRole !== routerOwner) {
-            return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
+    // if (routerOwner === "ADMIN" || routerOwner === "HOST" || routerOwner === "USER" || routerOwner === "SUPERADMIN") {
+    //     if (userRole !== routerOwner) {
+    //         return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
+    //     }
+    // }
+    if (routerOwner === "ADMIN") {
+        if (userRole !== "ADMIN" && userRole !== "SUPERADMIN") {
+          return NextResponse.redirect(
+            new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)
+          );
         }
-    }
+      }
+      
+      if (routerOwner === "HOST") {
+        if (userRole !== "HOST") {
+          return NextResponse.redirect(
+            new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)
+          );
+        }
+      }
+      
+      if (routerOwner === "USER") {
+        if (userRole !== "USER") {
+          return NextResponse.redirect(
+            new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)
+          );
+        }
+      }
+      
+      if (routerOwner === "SUPERADMIN") {
+        if (userRole !== "SUPERADMIN") {
+          return NextResponse.redirect(
+            new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)
+          );
+        }
+      }
+      
     console.log(userRole);
 
     return NextResponse.next();

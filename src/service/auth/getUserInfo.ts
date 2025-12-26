@@ -15,7 +15,7 @@ export const getUserInfo = async (): Promise<UserInfo | null> => {
         const result = await res.json()
 
    
-        return result
+        return result.data
     } catch (error: any) {
         console.log(error);
         return null;

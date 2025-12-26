@@ -1,7 +1,11 @@
-import React from "react";
+import { ReactNode } from "react";
 
-const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
+interface AdminDashboardLayoutProps {
+  children: ReactNode;
+}
+
+export default function AdminDashboardLayout({
+  children,
+}: AdminDashboardLayoutProps) {
   return <div>{children}</div>;
-};
-
-export default AdminDashboardLayout;
+}
