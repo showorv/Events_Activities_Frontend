@@ -28,13 +28,13 @@ const AllEventsManagementPage = async ({
     <div className="space-y-6">
       <EventsManagementHeader />
       <div className="flex space-x-2">
-        <SearchFilter paramName="searchTerm" placeholder="Search events..." />
+        <SearchFilter paramName="searchTerm" placeholder="Search events by name type location" />
         <SelectFilter
           paramName="type"
           options={[
-            { label: "Racing", value: "racing" },
-            { label: "Hiking", value: "hiking" },
-            { label: "Cycling", value: "cycling" },
+            { label: "Racing", value: "Racing" },
+            { label: "Hiking", value: "Hiking" },
+            { label: "Cycling", value: "Cycling" },
           ]}
           placeholder="Filter by type"
         />

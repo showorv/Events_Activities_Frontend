@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,16 @@ const EventFormDialog = ({ open, onClose, onSuccess, event }: Props) => {
     isEdit ? updateEvent.bind(null, event!._id!) : createEvent,
     null
   );
+  const [preview, setPreview] = useState<string | null>(
+    event?.image || null
+  );
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+  
+    const imageUrl = URL.createObjectURL(file);
+    setPreview(imageUrl);
+  };
 
   useEffect(() => {
     if (state?.success) {
@@ -35,7 +45,12 @@ const EventFormDialog = ({ open, onClose, onSuccess, event }: Props) => {
       toast.error(state.message);
     }
   }, [state]);
-
+  useEffect(() => {
+    if (!open) {
+      setPreview(event?.image || null);
+    }
+  }, [open, event]);
+  
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
@@ -57,12 +72,20 @@ const EventFormDialog = ({ open, onClose, onSuccess, event }: Props) => {
 
           <Field>
             <FieldLabel>Date</FieldLabel>
-            <Input type="date" name="date" />
+            <Input
+            type="date"
+            name="date"
+            defaultValue={
+              event?.date
+                ? new Date(event.date).toISOString().split("T")[0]
+                : ""
+            }
+          />
           </Field>
 
           <Field>
             <FieldLabel>Time</FieldLabel>
-            <Input name="time" placeholder="10:00 AM" />
+            <Input name="time" placeholder="10:00 AM" defaultValue={event?.time}/>
           </Field>
 
           <Field>
@@ -73,25 +96,46 @@ const EventFormDialog = ({ open, onClose, onSuccess, event }: Props) => {
           <Field>
             <FieldLabel>Participants</FieldLabel>
             <div className="flex gap-2">
-              <Input name="minParticipants" type="number" placeholder="Min" />
-              <Input name="maxParticipants" type="number" placeholder="Max" />
+              <Input name="minParticipants" type="number" placeholder="Min"  defaultValue={event?.minParticipants}/>
+              <Input name="maxParticipants" type="number" placeholder="Max"  defaultValue={event?.maxParticipants}/>
             </div>
           </Field>
 
           <Field>
             <FieldLabel>Joining Fee</FieldLabel>
-            <Input name="joiningFee" type="number" />
+            <Input name="joiningFee" type="number"   defaultValue={event?.joiningFee}/>
           </Field>
 
           <Field>
             <FieldLabel>Description</FieldLabel>
-            <Input name="description" />
+            <Input name="description" defaultValue={event?.description}/>
           </Field>
 
-          <Field>
+          {/* <Field>
             <FieldLabel>Image</FieldLabel>
             <Input name="file" type="file" accept="image/*" />
-          </Field>
+          </Field> */}
+          <Field>
+  <FieldLabel>Image</FieldLabel>
+
+  {preview && (
+    <div className="mb-2">
+      <img
+        src={preview}
+        alt="Event preview"
+        className="h-32 w-full rounded-md object-cover border"
+      />
+    </div>
+  )}
+
+  <Input
+    name="file"
+    type="file"
+    accept="image/*"
+    onChange={handleImageChange}
+  />
+</Field>
+
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={onClose} type="button">

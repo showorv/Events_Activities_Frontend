@@ -1,3 +1,14 @@
+
+export interface IEventParticipant {
+  _id: string;
+  status: "JOINED" | "CANCELLED" | "PENDING";
+  paymentStatus: "PAID" | "PENDING" | "FAILED";
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+}
 // types/event.interface.ts
 export interface IEvent {
     _id?: string;
@@ -16,5 +27,6 @@ export interface IEvent {
     joiningFee?: number;
     description?: string;
     image?: string;
+    participants?: IEventParticipant[]
   }
   

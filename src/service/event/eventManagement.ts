@@ -69,7 +69,11 @@ export async function getAllHostEvents(queryString?: string) {
       const result=  await response.json();
       return result
     } catch (error: any) {
-      console.log(error);
+      console.error("getAllHostEvents error →", {
+        message: error?.message,
+        stack: error?.stack,
+        cause: error?.cause,
+      });
       return {
         success: false,
         message:
@@ -116,12 +120,19 @@ export async function getAllHostEvents(queryString?: string) {
       if (!validation.success) {
         return validation;
       }
+
+      const newFormData = new FormData();
+    newFormData.append("data", JSON.stringify(validation.data));
+
+    if (formData.get("file")) {
+      newFormData.append("file", formData.get("file") as Blob);
+    }
   
       const response = await serverFetch.patch(`/event/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(validation.data),
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: newFormData,
       });
   
       const result=  await response.json();

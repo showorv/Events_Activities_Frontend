@@ -74,6 +74,52 @@ const EventViewDetailDialog = ({ open, onClose, event }: Props) => {
               </div>
             )}
           </div>
+
+          {/* Participants */}
+{event.participants && event.participants.length > 0 && (
+  <div className="space-y-3">
+    <h3 className="text-lg font-semibold">Participants</h3>
+
+    <div className="rounded-lg border overflow-hidden">
+      <table className="w-full text-sm">
+        <thead className="bg-muted">
+          <tr>
+            <th className="px-4 py-2 text-left">Name</th>
+            <th className="px-4 py-2 text-left">Email</th>
+            <th className="px-4 py-2 text-left">Status</th>
+            <th className="px-4 py-2 text-left">Payment</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {event.participants.slice(0, 5).map((p) => (
+            <tr key={p._id} className="border-t">
+              <td className="px-4 py-2">{p.user.name}</td>
+              <td className="px-4 py-2">{p.user.email}</td>
+              <td className="px-4 py-2">
+                <Badge variant="secondary">{p.status}</Badge>
+              </td>
+              <td className="px-4 py-2">
+                <Badge
+                  variant={p.paymentStatus === "PAID" ? "default" : "destructive"}
+                >
+                  {p.paymentStatus}
+                </Badge>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {event.participants.length > 5 && (
+      <p className="text-xs text-muted-foreground">
+        Showing first 5 participants. View all from participants page.
+      </p>
+    )}
+  </div>
+)}
+
         </div>
       </DialogContent>
     </Dialog>

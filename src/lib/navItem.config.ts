@@ -49,12 +49,7 @@ export const hostNavItems: NavSection[] = [
                 badge: "3",
                 roles: ["HOST"],
             },
-            {
-                title: "Create Events",
-                href: "/host/dashboard/create-events",
-                icon: "Plus", // ✅ String
-                roles: ["HOST"],
-            },
+          
             {
                 title: "Event Participants",
                 href: "/host/dashboard/event-participants",
