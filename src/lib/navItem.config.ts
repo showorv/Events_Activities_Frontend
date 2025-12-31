@@ -50,12 +50,7 @@ export const hostNavItems: NavSection[] = [
                 roles: ["HOST"],
             },
           
-            {
-                title: "Event Participants",
-                href: "/host/dashboard/event-participants",
-                icon: "PersonStanding", // ✅ String
-                roles: ["HOST"],
-            },
+           
             {
                 title: "Revenue",
                 href: "/host/dashboard/revenue",

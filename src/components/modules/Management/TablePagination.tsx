@@ -9,6 +9,7 @@ import { useTransition } from "react";
 interface TablePaginationProps {
   currentPage: number;
   totalPages: number;
+  onPageChange?: (page: number) => void; 
 }
 
 const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {

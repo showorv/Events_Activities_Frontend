@@ -1,13 +1,15 @@
 
 export interface IEventParticipant {
-  _id: string;
+  _id?: string;
   status: "JOINED" | "CANCELLED" | "PENDING";
   paymentStatus: "PAID" | "PENDING" | "FAILED";
   user: {
     _id: string;
     name: string;
     email: string;
+    profileImage?: string;
   };
+  createdAt?: string;
 }
 // types/event.interface.ts
 export interface IEvent {

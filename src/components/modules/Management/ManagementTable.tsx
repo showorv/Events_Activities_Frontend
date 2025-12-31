@@ -1,5 +1,5 @@
 "use client";
-import { Edit, Eye, Loader2, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, Eye, Loader2, MoreHorizontal, PersonStanding, Trash } from "lucide-react";
 import React from "react";
 
 import {
@@ -31,6 +31,7 @@ interface ManagementTableProps<T> {
   onView?: (row: T) => void;
   onEdit?: (row: T) => void;
   onDelete?: (row: T) => void;
+  onParticipants?: (row: T) => void;
   getRowKey: (row: T) => string;
   emptyMessage?: string;
   isRefreshing?: boolean;
@@ -46,11 +47,12 @@ function ManagementTable<T>({
   onView,
   onEdit,
   onDelete,
+  onParticipants,
   getRowKey,
   emptyMessage = "No records found.",
   isRefreshing = false,
 }: ManagementTableProps<T>) {
-  const hasActions = onView || onEdit || onDelete;
+  const hasActions = onView || onEdit || onDelete || onParticipants;
   return (
     <>
       <div className="rounded-lg border relative">
@@ -120,6 +122,15 @@ function ManagementTable<T>({
                               Edit
                             </DropdownMenuItem>
                           )}
+                          {onParticipants && (
+                            <DropdownMenuItem
+                              onClick={() => onParticipants(item)}
+                             
+                            >
+                              <PersonStanding className="mr-2 h-4 w-4" />
+                              View Participants
+                            </DropdownMenuItem>
+                          )}
                           {onDelete && (
                             <DropdownMenuItem
                               onClick={() => onDelete(item)}
@@ -129,6 +140,7 @@ function ManagementTable<T>({
                               Delete
                             </DropdownMenuItem>
                           )}
+                          
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

@@ -1,17 +1,19 @@
 "use client";
 
 
-import { IEvent } from "@/types/event.interface";
+import { IEvent, IEventParticipant } from "@/types/event.interface";
 
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useTransition, useState } from "react";
-import { deleteEvent } from "@/service/event/eventManagement";
+import { deleteEvent, getEventParticipants } from "@/service/event/eventManagement";
 import ManagementTable from "../Management/ManagementTable";
 import DeleteConfirmationDialog from "../shared/DeleteConfrimDialog";
 import { eventsColumns } from "./EventColoum";
 import EventFormDialog from "./EventDialog";
 import EventViewDetailDialog from "./EventDetails";
+
+import EventParticipantsTableDialog from "./EventParticipantsDialog";
 
 
 const EventsTable = ({ events }: { events: IEvent[] }) => {
@@ -20,7 +22,9 @@ const EventsTable = ({ events }: { events: IEvent[] }) => {
     const [deleting, setDeleting] = useState<IEvent | null>(null);
     const [edit, setEdit] = useState<IEvent | null>(null);
     const [view, setView] = useState<IEvent | null>(null);
-  
+    const [participants, setParticipants] = useState<IEventParticipant[]>([]);
+    const [participantsOpen, setParticipantsOpen] = useState(false);
+    
     const confirmDelete = async () => {
       if (!deleting?._id) return; // safe check
       const res = await deleteEvent(deleting._id);
@@ -43,7 +47,14 @@ const EventsTable = ({ events }: { events: IEvent[] }) => {
         router.refresh();
       });
     };
-  
+    const handleViewParticipants = async (event: IEvent) => {
+      const res = await getEventParticipants(event._id!);
+      if (res.success) {
+        setParticipants(res.data.participants);
+        setParticipantsOpen(true);
+      }
+    };
+    
     return (
       <>
         <ManagementTable
@@ -51,6 +62,7 @@ const EventsTable = ({ events }: { events: IEvent[] }) => {
           columns={eventsColumns}
           onView={handleView}
           onEdit={handleEdit}
+          onParticipants={handleViewParticipants}
           getRowKey={(e) => e._id!}
           onDelete={(e) => e && setDeleting(e)}
         />
@@ -71,6 +83,11 @@ const EventsTable = ({ events }: { events: IEvent[] }) => {
         onClose={() => setView(null)}
         event={view}
       />
+  <EventParticipantsTableDialog
+    open={participantsOpen}
+    onClose={() => setParticipantsOpen(false)}
+   participant={participants}
+  />
 
   
         <DeleteConfirmationDialog

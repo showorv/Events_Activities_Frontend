@@ -183,3 +183,21 @@ export async function getAllHostEvents(queryString?: string) {
     }
   }
   
+  export const getEventParticipants = async (
+    eventId: string,
+    query = ""
+  ) => {
+    const res = await serverFetch.get(
+      `/event/view/${eventId}${query}`
+    );
+    return res.json();
+  };
+  export const getEventRevenue = async () => {
+    try {
+      const res = await serverFetch.get("/event/revenue");
+      return await res.json();
+    } catch (err) {
+      console.error(err);
+      return { success: false, data: [] };
+    }
+  };
