@@ -2,6 +2,7 @@
 
 import { updateUser } from "@/service/user/user";
 import { useState } from "react";
+import { toast } from "sonner";
 
 
 interface User {
@@ -69,7 +70,13 @@ export default function UserProfileClient({ user }: { user: User }) {
     
 
     setLoading(false);
-    alert(res.success ? "Profile updated" : "Update failed");
+    // toast.e(res.success ? "Profile updated" : "Update failed");
+
+    if(res.success){
+        toast.success(res.message || "Profile updated")
+    }else{
+        toast.error(res.message || "Update failed")
+    }
   };
 
   return (

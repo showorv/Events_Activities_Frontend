@@ -48,3 +48,17 @@ export async function updateUser(id: string,formData: FormData) {
       return { success: false, message: error.message || "Something went wrong" };
     }
   }
+// export async function changePassword() {
+//     try {
+//       const response = await fetch(`${API_BASE}/user/change-password`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+        
+//         credentials: "include", 
+//       });
+//       return await response.json();
+//     } catch (error: any) {
+//       console.error(error);
+//       return { success: false, message: error.message || "Something went wrong" };
+//     }
+//   }

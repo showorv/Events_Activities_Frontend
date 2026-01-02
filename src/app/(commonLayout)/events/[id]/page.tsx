@@ -16,7 +16,7 @@ const EventDetailsPage = async ({ params }: PageProps) => {
 
   return (
     <div className="max-w-7xl mx-auto mt-20">
-  <EventDetailsClient event={res.data} />
+  <EventDetailsClient event={res.data}/>
   </div>
   );
 };
