@@ -46,7 +46,7 @@ export const hostNavItems: NavSection[] = [
                 title: "All Events",
                 href: "/host/dashboard/all-events",
                 icon: "ChartColumnDecreasing", // ✅ String
-                badge: "3",
+                // badge: "3",
                 roles: ["HOST"],
             },
           
