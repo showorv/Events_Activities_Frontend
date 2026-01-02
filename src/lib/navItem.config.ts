@@ -17,7 +17,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                 },
                 {
                     title: "My Profile",
-                    href: `/profile`,
+                    href: `${defaultDashboard}/profile`,
                     icon: "User",
                     roles: ["ADMIN", "SUPERADMIN", "USER", "HOST"],
                 },
@@ -73,7 +73,7 @@ export const userNavItems: NavSection[] = [
             },
             {
                 title: "Joined Event",
-                href: "/user/dashboard/join-event",
+                href: "/user/dashboard/past-event",
                 icon: "ListChevronsUpDown", // ✅ String
                 roles: ["USER"],
             },

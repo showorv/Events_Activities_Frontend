@@ -136,7 +136,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, CircleUserRound } from "lucide-react";
 import Image from "next/image";
 
 import { UserInfo } from "@/types/user.interface";
@@ -228,13 +228,18 @@ export default function Navbar({ userInfo }: NavbarProps) {
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2 rounded-full border border-border px-2 py-1 hover:bg-accent/10 transition"
               >
-                <Image
-                  src={userInfo.profileImage || "/default-avatar.png"}
-                  alt="avatar"
-                  width={8}
-                  height={8}
-                  className="rounded-full"
-                />
+                {userInfo.profileImage? (
+
+                  <Image
+                    src={userInfo.profileImage }
+                    alt="avatar"
+                    width={8}
+                    height={8}
+                    className="rounded-full"
+                  />
+                ): (
+                  <CircleUserRound className="w-10 h-10 text-gray-400" />
+                )}
                 <ChevronDown size={8} />
               </button>
 
