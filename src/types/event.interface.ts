@@ -11,7 +11,7 @@ export interface IEventParticipant {
   };
   createdAt?: string;
 }
-// types/event.interface.ts
+
 export interface IEvent {
     _id?: string;
   

@@ -62,3 +62,95 @@ export async function updateUser(id: string,formData: FormData) {
 //       return { success: false, message: error.message || "Something went wrong" };
 //     }
 //   }
+
+
+
+export async function blockUser(userId: string) {
+  try {
+    const res = await fetch(`${API_BASE}/user/block/${userId}`, {
+      method: "PATCH",
+      credentials: "include",
+    });
+
+    return await res.json();
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "Failed to block user",
+    };
+  }
+}
+
+export async function unblockUser(userId: string) {
+  try {
+    const res = await fetch(`${API_BASE}/user/unblock/${userId}`, {
+      method: "PATCH",
+      credentials: "include",
+    });
+
+    return await res.json();
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "Failed to unblock user",
+    };
+  }
+}
+
+/**
+ * Helper – auto decide block / unblock
+ */
+export async function toggleBlockUser(userId: string, isBlocked: boolean) {
+  return isBlocked ? unblockUser(userId) : blockUser(userId);
+}
+
+
+
+export async function getAllUsers(queryString?: string) {
+  try {
+    const response = await serverFetch.get(
+      `/user${queryString ? `?${queryString}` : ""}`
+    );
+    const result=  await response.json();
+    return result
+  } catch (error: any) {
+    console.error("getAllHostEvents error →", {
+      message: error?.message,
+      stack: error?.stack,
+      cause: error?.cause,
+    });
+    return {
+      success: false,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong",
+    };
+  }
+}
+
+export const getAllHostRequests = async () => {
+  try {
+    const res = await fetch(`${API_BASE}/user/request-host`, {
+      method: "GET",
+      credentials: "include",
+    });
+    return await res.json();
+  } catch (error: any) {
+    console.error(error);
+    return { success: false, message: error.message || "Something went wrong", data: [] };
+  }
+};
+
+export const approveHostRequest = async (userId: string) => {
+  try {
+    const res = await fetch(`${API_BASE}/user/approve/${userId}`, {
+      method: "PATCH",
+      credentials: "include",
+    });
+    return await res.json();
+  } catch (error: any) {
+    console.error(error);
+    return { success: false, message: error.message || "Something went wrong" };
+  }
+};

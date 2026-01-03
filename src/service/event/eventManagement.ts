@@ -83,6 +83,28 @@ export async function getAllHostEvents(queryString?: string) {
       };
     }
   }
+export async function getAllAdminEvents(queryString?: string) {
+    try {
+      const response = await serverFetch.get(
+        `/event/adminEvent${queryString ? `?${queryString}` : ""}`
+      );
+      const result=  await response.json();
+      return result
+    } catch (error: any) {
+      console.error("getAllHostEvents error →", {
+        message: error?.message,
+        stack: error?.stack,
+        cause: error?.cause,
+      });
+      return {
+        success: false,
+        message:
+          process.env.NODE_ENV === "development"
+            ? error.message
+            : "Something went wrong",
+      };
+    }
+  }
   
   export async function updateEvent(
     id: string,
