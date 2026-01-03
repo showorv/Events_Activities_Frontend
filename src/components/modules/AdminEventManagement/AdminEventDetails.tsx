@@ -9,6 +9,8 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
+import { Status } from "@/types/event.interface";
+import { Badge } from "@/components/ui/badge";
 
 interface EventDetailsProps {
   open: boolean;
@@ -18,6 +20,20 @@ interface EventDetailsProps {
 
 const EventDetails = ({ open, onClose, event }: EventDetailsProps) => {
   if (!event) return null;
+  const getStatusVariant = (status: Status) => {
+    switch (status) {
+      case Status.OPEN:
+        return "default";
+      case Status.FULL:
+        return "destructive";
+      case Status.CANCELLED:
+        return "secondary";
+      case Status.COMPLETED:
+        return "default";
+      default:
+        return "default";
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -42,7 +58,11 @@ const EventDetails = ({ open, onClose, event }: EventDetailsProps) => {
               height={200}
               className="rounded-lg object-cover"
             />
-
+        {event.status && (
+                <Badge variant={getStatusVariant(event.status)} className="mt-1">
+                    {event.status}
+                </Badge>
+                )}
             <div className="space-y-2">
               <h2 className="text-2xl font-semibold">{event.name}</h2>
               <p className="text-sm text-muted-foreground">{event.type}</p>

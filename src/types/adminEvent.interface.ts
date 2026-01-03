@@ -1,3 +1,5 @@
+import { Status } from "./event.interface";
+
 interface IUser {
     _id: string;
     name: string;
@@ -29,9 +31,10 @@ interface IUser {
     minParticipants: number;
     maxParticipants: number;
     joiningFee: number;
+    status?: Status;
     description: string;
     image: string;
-    status: "OPEN" | "COMPLETED" | "FULL";
+   
     host: IUser;
     participants: IEventParticipant[];
   }

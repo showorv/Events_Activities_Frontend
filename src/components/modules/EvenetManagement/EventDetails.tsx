@@ -73,6 +73,11 @@ const EventViewDetailDialog = ({ open, onClose, event }: Props) => {
                 <p className="text-sm text-muted-foreground">{event.description}</p>
               </div>
             )}
+            {event.status && (
+              <div className="md:col-span-2">
+                <p className="text-sm text-muted-foreground">Status: {event.status}</p>
+              </div>
+            )}
           </div>
 
           {/* Participants */}

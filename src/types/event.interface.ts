@@ -12,6 +12,13 @@ export interface IEventParticipant {
   createdAt?: string;
 }
 
+export enum Status  {
+  OPEN= "OPEN",
+  FULL="FULL",
+  CANCELLED="CANCELLED",
+  COMPLETED="COMPLETED"
+}
+
 export interface IEvent {
     _id?: string;
   
@@ -22,7 +29,7 @@ export interface IEvent {
     time: string;
   
     location: string;
-  
+    status?: Status;
     minParticipants: number;
     maxParticipants: number;
   

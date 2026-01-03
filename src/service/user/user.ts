@@ -1,5 +1,5 @@
 import { serverFetch } from "@/lib/server-fetch";
-
+const API_BASE = process.env.NEXT_PUBLIC_API_URL
 export async function getSingleUser(id: string) {
     try {
       const response = await serverFetch.get(
@@ -31,7 +31,7 @@ export const getMe = async () => {
 //   });
 //   return res.json();
 // };
-const API_BASE = process.env.NEXT_PUBLIC_API_URL
+
 
 
 export async function updateUser(id: string,formData: FormData) {

@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import JoinEventModal from "./EventJoinModal";
+import { Status } from "@/types/event.interface"; // make sure Status enum is imported
 
 interface Props {
   event: any;
@@ -16,6 +18,21 @@ export default function EventDetailsClient({ event }: Props) {
 
   const handleJoinClick = () => {
     setIsModalOpen(true);
+  };
+
+  const getStatusVariant = (status: Status) => {
+    switch (status) {
+      case Status.OPEN:
+        return "default";
+      case Status.FULL:
+        return "destructive";
+      case Status.CANCELLED:
+        return "secondary";
+      case Status.COMPLETED:
+        return "default";
+      default:
+        return "default";
+    }
   };
 
   return (
@@ -33,6 +50,14 @@ export default function EventDetailsClient({ event }: Props) {
       {/* Event Info */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">{event?.name}</h1>
+
+        {/* Status Badge */}
+        {event.status && (
+          <Badge variant={getStatusVariant(event.status)} className="mt-1">
+            {event.status}
+          </Badge>
+        )}
+
         <p className="text-gray-600">{event?.description}</p>
         <p className="text-sm">📍 {event?.location} | ⏰ {event?.time}</p>
       </div>
@@ -60,19 +85,19 @@ export default function EventDetailsClient({ event }: Props) {
         <h2 className="text-xl font-semibold">Participants ({event.participants.length})</h2>
         <div className="grid md:grid-cols-3 gap-4 mt-4">
           {event.participants.map((p: any) => (
-            <motion.div key={p._id} whileHover={{ scale: 1.05 }} className="flex items-center gap-3 p-4 border rounded-xl">
-              <Link href={`/user-profile/${p.user._id}`} className="flex gap-3 items-center">
-                {p.user.profileImage ? (
-                  <img src={p.user.profileImage} className="w-10 h-10 rounded-full" />
-                ) : (
-                  <CircleUserRound className="w-10 h-10 text-gray-400" />
-                )}
-                <div>
-                  <p className="font-medium">{p.user.name}</p>
-                  <p className="text-sm text-muted-foreground">{p.user.email}</p>
-                </div>
-              </Link>
-            </motion.div>
+           <Link href={`/user-profile/${p.user._id}`} key={p._id} className="block">
+           <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-3 p-4 border rounded-xl cursor-pointer">
+             {p.user.profileImage ? (
+               <img src={p.user.profileImage} className="w-10 h-10 rounded-full" />
+             ) : (
+               <CircleUserRound className="w-10 h-10 text-gray-400" />
+             )}
+             <div>
+               <p className="font-medium">{p.user.name}</p>
+               <p className="text-sm text-muted-foreground">{p.user.email}</p>
+             </div>
+           </motion.div>
+         </Link>
           ))}
         </div>
       </div>

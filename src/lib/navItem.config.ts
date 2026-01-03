@@ -57,6 +57,12 @@ export const hostNavItems: NavSection[] = [
                 icon: "HandCoins", // ✅ String
                 roles: ["HOST"],
             },
+            {
+                title: "Rating Summary",
+                href: "/host/dashboard/rating",
+                icon: "Star", // ✅ String
+                roles: ["HOST"],
+            },
         ],
     }
 ]

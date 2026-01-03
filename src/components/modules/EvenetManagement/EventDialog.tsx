@@ -6,7 +6,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { IEvent } from "@/types/event.interface";
+import { IEvent, Status } from "@/types/event.interface";
 import { toast } from "sonner";
 import { createEvent, updateEvent } from "@/service/event/eventManagement";
 import InputFieldError from "../shared/InputFieldError";
@@ -110,7 +110,20 @@ const EventFormDialog = ({ open, onClose, onSuccess, event }: Props) => {
             <FieldLabel>Description</FieldLabel>
             <Input name="description" defaultValue={event?.description}/>
           </Field>
-
+          <Field>
+            <FieldLabel>Status</FieldLabel>
+            <select
+              name="status"
+              defaultValue={event?.status || Status.OPEN}
+              className="w-full border rounded-md p-2"
+            >
+              {Object.values(Status).map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </Field>
           {/* <Field>
             <FieldLabel>Image</FieldLabel>
             <Input name="file" type="file" accept="image/*" />

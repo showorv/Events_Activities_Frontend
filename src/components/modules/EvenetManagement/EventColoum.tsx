@@ -1,10 +1,6 @@
-"use client";
-
-
-
-import { IEvent } from "@/types/event.interface";
 import { Badge } from "@/components/ui/badge";
 import { Column } from "../Management/ManagementTable";
+import { IEvent, Status } from "@/types/event.interface";
 import { DateCell } from "../shared/DateCell";
 
 export const eventsColumns: Column<IEvent>[] = [
@@ -41,11 +37,30 @@ export const eventsColumns: Column<IEvent>[] = [
     header: "Fee",
     accessor: (event) =>
       event.joiningFee ? (
-        <span className="text-green-600 font-semibold">
-          ৳{event.joiningFee}
-        </span>
+        <span className="text-green-600 font-semibold">৳{event.joiningFee}</span>
       ) : (
         <Badge variant="secondary">Free</Badge>
       ),
+  },
+  {
+    header: "Status",
+    accessor: (event) => {
+      let variant: "default" | "destructive" | "secondary" = "default";
+      switch (event.status) {
+        case Status.OPEN:
+          variant = "default";
+          break;
+        case Status.FULL:
+          variant = "destructive";
+          break;
+        case Status.CANCELLED:
+          variant = "secondary";
+          break;
+        case Status.COMPLETED:
+          variant = "default";
+          break;
+      }
+      return <Badge variant={variant}>{event.status}</Badge>;
+    },
   },
 ];
