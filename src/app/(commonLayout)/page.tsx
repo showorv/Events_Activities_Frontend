@@ -1,4 +1,9 @@
+import AboutSection from "@/components/modules/home/AboutSection";
+import ContactSection from "@/components/modules/home/ContactSection";
+import FAQSection from "@/components/modules/home/FaqSection";
 import HeroSection from "@/components/modules/home/HeroSection";
+import SponsoredSection from "@/components/modules/home/SponsoredSection";
+import TopEventsSection from "@/components/modules/home/TopEventsSection";
 import Head from "next/head";
 
 export default function Home() {
@@ -17,6 +22,11 @@ export default function Home() {
     <main>
 
     <HeroSection />
+    <SponsoredSection />
+      <TopEventsSection />
+      <AboutSection />
+      <FAQSection />
+      <ContactSection />
     </main>
     </>
   )

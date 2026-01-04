@@ -161,12 +161,12 @@ export default function ParallaxHero() {
             </motion.a>
 
             <motion.a
-              href="/become-host"
+              href="/about"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               className="rounded-full border border-border px-7 py-3 font-medium text-foreground hover:bg-accent-foreground hover:text-background"
             >
-              Become a Host
+              About Us
             </motion.a>
           </div>
         </div>

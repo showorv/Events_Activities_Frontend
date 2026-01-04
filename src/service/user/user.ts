@@ -1,5 +1,7 @@
 import { serverFetch } from "@/lib/server-fetch";
-const API_BASE = process.env.NEXT_PUBLIC_API_URL
+const API_BASE = process.env.NEXT_PUBLIC_BASE_API_URL
+
+
 export async function getSingleUser(id: string) {
     try {
       const response = await serverFetch.get(
@@ -152,5 +154,32 @@ export const approveHostRequest = async (userId: string) => {
   } catch (error: any) {
     console.error(error);
     return { success: false, message: error.message || "Something went wrong" };
+  }
+};
+
+export interface ContactPayload {
+  name: string;
+  email: string;
+  message: string;
+}
+
+export const submitContact = async (data: ContactPayload) => {
+  try {
+    const res = await fetch(`${API_BASE}/contact/send`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) throw new Error(result.message || "Failed to send message");
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.message || "Something went wrong");
   }
 };

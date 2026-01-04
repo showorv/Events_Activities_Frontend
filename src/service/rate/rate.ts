@@ -1,5 +1,5 @@
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL
+const API_BASE = process.env.NEXT_PUBLIC_BASE_API_URL
 export const rateHost = async (payload: { hostId: string; eventId: string; stars: number }) => {
     try {
       const res = await fetch(`${API_BASE}/rating/rate`, {

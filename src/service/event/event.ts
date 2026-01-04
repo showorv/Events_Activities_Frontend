@@ -29,6 +29,19 @@ export async function getEvent(query?: { searchTerm?: string }) {
   }
 }
 
+export async function getTopEvent() {
+  try {
+    const response = await fetch(`${API_BASE}/event/userEvent`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", 
+    });
+    return await response.json();
+  } catch (error: any) {
+    console.error(error);
+    return { success: false, message: error.message || "Something went wrong" };
+  }
+}
 // export async function joinEvent(id: string) {
 //   try {
 //     const response = await serverFetch.post(
@@ -48,7 +61,7 @@ export async function getEvent(query?: { searchTerm?: string }) {
 //   }
 // }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL
+const API_BASE = process.env.NEXT_PUBLIC_BASE_API_URL
 
 export async function joinEvent(id: string) {
   try {

@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { cookies } from 'next/headers';
+
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { UserRole, getDefaultDashboardRoute, getRouteOwner, isAuthRoute } from './types/authTypeProxy';

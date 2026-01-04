@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Eventify Frontend
 
-## Getting Started
+Eventify is a modern, responsive event management platform frontend built with **React.js**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.  
+It allows users to explore, join, and host events while providing a clean and interactive UI experience.
 
-First, run the development server:
+---
+
+## 🌐 Live Deployment
+
+- **Frontend:** [https://ride-booking-frontend-pi.vercel.app](https://ride-booking-frontend-pi.vercel.app)  
+- **Backend API:** [https://ride-booking-api-backend.vercel.app](https://ride-booking-api-backend.vercel.app)
+
+---
+
+## 📦 Features
+
+- **Explore Events**: Users can browse and filter upcoming events.
+- **Event Details**: View detailed information about each event.
+- **Join Events**: Register for events and view participant information.
+- **Role-based UI**:
+  - **USER**: Explore events, become a host.
+  - **HOST**: Explore events, manage your events.
+  - **ADMIN / SUPERADMIN**: Explore events, access the dashboard.
+- **Contact Form**: Animated form with API integration and toast notifications.
+- **FAQ Section**: Collapsible questions and answers.
+- **Sponsors Section**: Show trusted sponsors with hover effects.
+- **Animated Hero Section**: Parallax and scroll-based animations with changing headings.
+- **Responsive Design**: Fully responsive for mobile, tablet, and desktop.
+
+---
+
+## ⚡ Technologies Used
+
+- **Frontend**:
+  - Nextjs
+  - TypeScript
+  - Tailwind CSS
+  - Framer Motion (animations & scroll effects)
+  - Lucide React Icons
+  - react-hot-toast (notifications)
+- **State Management & API Calls**:
+  - Custom services for API requests
+- **Routing**:
+  - Next.js App Router (`app` directory)
+
+---
+
+
+## ⚙️ Setup Instructions
+
+1. Clone the repo and navigate to the frontend folder:
+
+```bash
+git clone https://github.com/showorv/Events_Activities_Frontend.git
+
+cd ../client-side
+
+npm install
+
+```
+2. Create a .env file (if needed):
+
+```bash
+NEXT_PUBLIC_BASE_API_URL=https://yourbackendlink.com
+```
+3. Start development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Credentials
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Super Admin
+SUPER_ADMIN_EMAIL=yousufshowrov101@gmail.com
+SUPER_ADMIN_PASSWORD=yousuf12
 
-## Learn More
+## Host
 
-To learn more about Next.js, take a look at the following resources:
+HOST_EMAIL=showrov124@gmail.com
+HOST_PASSWORD=Hello12
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## User
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+USER_EMAIL=showrov121@gmail.com
+USER_PASSWORD=Hello23
 
-## Deploy on Vercel
+```
+## 🧑‍💻 Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Yousuf Showrov**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feel free to reach out on `GitHub` or `LinkedIn` for suggestions or contributions.
