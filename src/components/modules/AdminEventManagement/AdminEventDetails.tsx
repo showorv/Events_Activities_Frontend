@@ -20,6 +20,7 @@ interface EventDetailsProps {
 
 const EventDetails = ({ open, onClose, event }: EventDetailsProps) => {
   if (!event) return null;
+
   const getStatusVariant = (status: Status) => {
     switch (status) {
       case Status.OPEN:
@@ -48,48 +49,49 @@ const EventDetails = ({ open, onClose, event }: EventDetailsProps) => {
         </DialogHeader>
 
         <div className="space-y-8 mt-4">
-
           {/* Event Header */}
-          <div className="flex flex-col md:flex-row gap-6">
-            <Image
-              src={event.image}
-              alt={event.name}
-              width={320}
-              height={200}
-              className="rounded-lg object-cover"
-            />
-        {event.status && (
-                <Badge variant={getStatusVariant(event.status)} className="mt-1">
-                    {event.status}
+          <div className="flex flex-col md:flex-row gap-6 items-start">
+            <div className="relative w-full md:w-1/3 h-64 rounded-lg overflow-hidden shadow-md">
+              <Image
+                src={event.image}
+                alt={event.name}
+                fill
+                className="object-cover"
+              />
+              {event.status && (
+                <Badge
+                  variant={getStatusVariant(event.status)}
+                  className="absolute top-3 left-3"
+                >
+                  {event.status}
                 </Badge>
-                )}
-            <div className="space-y-2">
-              <h2 className="text-2xl font-semibold">{event.name}</h2>
+              )}
+            </div>
+
+            <div className="flex-1 space-y-2">
+              <h2 className="text-3xl font-bold">{event.name}</h2>
               <p className="text-sm text-muted-foreground">{event.type}</p>
-              <p>📍 {event.location}</p>
-              <p>
+              <p className="flex items-center gap-2">📍 {event.location}</p>
+              <p className="flex items-center gap-2">
                 🗓 {new Date(event.date).toDateString()} — {event.time}
               </p>
-              <p>💳 Fee: ৳{event.joiningFee}</p>
-              <p className="font-medium">Status: {event.status}</p>
+              <p className="flex items-center gap-2">💳 Fee: ৳{event.joiningFee}</p>
             </div>
           </div>
 
           {/* Host Info */}
-          <div className="border rounded-lg p-4">
+          <div className="border rounded-lg p-4 shadow-sm bg-background/50">
             <h3 className="text-lg font-semibold mb-3">Host Details</h3>
             <div className="flex items-center gap-4">
-              {event.host.profileImage && (
-                <Image
-                  src={event.host.profileImage}
-                  alt={event.host.name}
-                  width={60}
-                  height={60}
-                  className="rounded-full"
-                />
-              )}
-              <div>
-                <p className="font-medium">{event.host.name}</p>
+              <Image
+                src={event.host.profileImage || "/default-avatar.png"}
+                alt={event.host.name}
+                width={60}
+                height={60}
+                className="rounded-full object-cover border border-border"
+              />
+              <div className="flex flex-col">
+                <p className="font-medium text-lg">{event.host.name}</p>
                 <p className="text-sm text-muted-foreground">{event.host.email}</p>
                 <p className="text-sm text-yellow-500">
                   ⭐ {event.host.ratingAvg || 0}
@@ -99,7 +101,7 @@ const EventDetails = ({ open, onClose, event }: EventDetailsProps) => {
           </div>
 
           {/* Description */}
-          <div>
+          <div className="bg-muted/20 p-4 rounded-lg shadow-inner">
             <h3 className="text-lg font-semibold mb-2">Description</h3>
             <p className="text-muted-foreground">{event.description}</p>
           </div>
@@ -109,20 +111,25 @@ const EventDetails = ({ open, onClose, event }: EventDetailsProps) => {
             <h3 className="text-lg font-semibold mb-3">
               Participants ({event.participants.length})
             </h3>
-            <div className="overflow-x-auto border rounded-lg">
-              <table className="w-full text-sm">
-                <thead className="bg-muted">
+            <div className="overflow-x-auto border rounded-lg shadow-md">
+              <table className="w-full text-sm table-auto">
+                <thead className="bg-muted text-left">
                   <tr>
-                    <th className="p-3 text-left">Name</th>
-                    <th className="p-3 text-left">Email</th>
+                    <th className="p-3">Name</th>
+                    <th className="p-3">Email</th>
                     <th className="p-3 text-center">Status</th>
                     <th className="p-3 text-center">Payment</th>
                     <th className="p-3 text-center">Joined At</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {event.participants.map((p) => (
-                    <tr key={p._id} className="border-t">
+                  {event.participants.map((p, idx) => (
+                    <tr
+                      key={p._id}
+                      className={`border-t hover:bg-muted/10 ${
+                        idx % 2 === 0 ? "bg-background/50" : ""
+                      }`}
+                    >
                       <td className="p-3">{p.user.name}</td>
                       <td className="p-3">{p.user.email}</td>
                       <td className="p-3 text-center">{p.status}</td>
@@ -136,7 +143,6 @@ const EventDetails = ({ open, onClose, event }: EventDetailsProps) => {
               </table>
             </div>
           </div>
-
         </div>
       </DialogContent>
     </Dialog>

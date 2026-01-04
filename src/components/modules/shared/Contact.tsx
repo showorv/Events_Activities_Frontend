@@ -2,31 +2,32 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { submitContact } from "@/service/user/user";
 
+import { submitContact } from "@/service/user/user";
+import { toast } from "sonner";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setSuccess("");
-    setError("");
 
     try {
-      await submitContact({ name, email, message });
-      setSuccess("Message sent successfully!");
-      setName("");
-      setEmail("");
-      setMessage("");
+      const res = await submitContact({ name, email, message });
+      if (res.success) {
+        toast.success("Message sent successfully!");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        toast.error(res.message || "Failed to send message"); 
+      }
     } catch (err: any) {
-      setError(err.message);
+      toast.error(err.message || "Something went wrong"); 
     } finally {
       setLoading(false);
     }
@@ -34,7 +35,7 @@ export default function ContactForm() {
 
   return (
     <motion.section
-      className="py-24 px-6 max-w-2xl mx-auto"
+      className="py-24 px-6 max-w-2xl mx-auto mt-20"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -66,9 +67,6 @@ export default function ContactForm() {
           className="w-full rounded-lg border p-4 text-foreground h-32 resize-none"
           required
         />
-
-        {success && <p className="text-green-500">{success}</p>}
-        {error && <p className="text-red-500">{error}</p>}
 
         <button
           type="submit"

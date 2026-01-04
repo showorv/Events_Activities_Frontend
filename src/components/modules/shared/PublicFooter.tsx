@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Twitter, Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
@@ -36,9 +37,10 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-muted-foreground">
+          <li><Link href="/" className="hover:text-primary">Home</Link></li>
             <li><Link href="/events" className="hover:text-primary">Events</Link></li>
-            <li><Link href="/become-host" className="hover:text-primary">Become a Host</Link></li>
-            <li><Link href="/dashboard" className="hover:text-primary">Dashboard</Link></li>
+            <li><Link href="/about" className="hover:text-primary">About</Link></li>
+           
             <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
           </ul>
         </div>
@@ -47,9 +49,9 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Support</h3>
           <ul className="space-y-2 text-muted-foreground">
-            <li><Link href="/help" className="hover:text-primary">Help Center</Link></li>
-            <li><Link href="/terms" className="hover:text-primary">Terms & Conditions</Link></li>
-            <li><Link href="/privacy" className="hover:text-primary">Privacy Policy</Link></li>
+            <li><Link href="/" className="hover:text-primary">Help Center</Link></li>
+            <li><Link href="/" className="hover:text-primary">Terms & Conditions</Link></li>
+            <li><Link href="/" className="hover:text-primary">Privacy Policy</Link></li>
           </ul>
         </div>
 
@@ -59,20 +61,10 @@ export default function Footer() {
           <p className="text-muted-foreground text-sm mb-3">
             Subscribe to get latest event updates.
           </p>
-
-          <form className="flex gap-2">
-            <input
-              type="email"
-              placeholder="Enter email"
-              className="w-full px-3 py-2 rounded-md bg-card text-foreground border border-border"
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition"
-            >
-              Join
-            </button>
-          </form>
+          <Link href="/contact">
+          <Button>Contact Us</Button>
+          </Link>
+              
         </div>
       </div>
 

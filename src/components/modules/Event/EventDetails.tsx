@@ -8,6 +8,8 @@ import { CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import JoinEventModal from "./EventJoinModal";
 import { Status } from "@/types/event.interface"; // make sure Status enum is imported
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getInitials } from "@/lib/formatter";
 
 interface Props {
   event: any;
@@ -87,11 +89,15 @@ export default function EventDetailsClient({ event }: Props) {
           {event.participants.map((p: any) => (
            <Link href={`/user-profile/${p.user._id}`} key={p._id} className="block">
            <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-3 p-4 border rounded-xl cursor-pointer">
-             {p.user.profileImage ? (
-               <img src={p.user.profileImage} className="w-10 h-10 rounded-full" />
-             ) : (
-               <CircleUserRound className="w-10 h-10 text-gray-400" />
-             )}
+           <Avatar className="h-20 w-20">
+              {p.user.profileImage ? (
+                <AvatarImage src={p.user.profileImage} />
+              ) : (
+                <AvatarFallback className="text-xl">
+                  {getInitials(p.user.name)}
+                </AvatarFallback>
+              )}
+            </Avatar>
              <div>
                <p className="font-medium">{p.user.name}</p>
                <p className="text-sm text-muted-foreground">{p.user.email}</p>

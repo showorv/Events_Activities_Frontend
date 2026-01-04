@@ -1,6 +1,6 @@
 # Eventify Frontend
 
-Eventify is a modern, responsive event management platform frontend built with **React.js**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.  
+Eventify is a modern, responsive event management platform frontend built with **NextJs**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.  
 It allows users to explore, join, and host events while providing a clean and interactive UI experience.
 
 ---
@@ -86,7 +86,7 @@ HOST_PASSWORD=Hello12
 ## User
 
 USER_EMAIL=showrov121@gmail.com
-USER_PASSWORD=Hello23
+USER_PASSWORD=Hello123
 
 ```
 ## 🧑‍💻 Author

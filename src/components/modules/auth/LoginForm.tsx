@@ -94,14 +94,14 @@ const LoginForm = () => {
                 Sign up
               </a>
             </FieldDescription>
-            <FieldDescription className="px-6 text-center">
+            {/* <FieldDescription className="px-6 text-center">
               <a
                 href="/forget-password"
                 className="text-blue-600 hover:underline"
               >
                 Forgot password?
               </a>
-            </FieldDescription>
+            </FieldDescription> */}
           </Field>
         </FieldGroup>
       </FieldGroup>

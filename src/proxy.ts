@@ -79,7 +79,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Rule 3 : User is trying to access common protected route
-    if (routerOwner === "COMMON") {
+    if (routerOwner === "COMMON" || routerOwner === null  ) {
         return NextResponse.next();
     }
 
@@ -106,10 +106,14 @@ export async function proxy(request: NextRequest) {
       }
       
       if (routerOwner === "USER") {
+        if (pathname.startsWith("/user-profile")) {
+          // allow HOST and ADMIN to view user profiles
+          if (userRole === "USER" || userRole === "HOST" || userRole === "ADMIN" || userRole === "SUPERADMIN") {
+            return NextResponse.next();
+          }
+        }
         if (userRole !== "USER") {
-          return NextResponse.redirect(
-            new URL(getDefaultDashboardRoute(userRole as UserRole), request.url)
-          );
+          return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url));
         }
       }
       

@@ -12,7 +12,7 @@ export default function EventsClient({ events }: { events: any[] }) {
   return (
     <div className="space-y-6">
       {/* Filters */}
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <SearchFilter paramName="searchTerm" placeholder="Search events..." />
         <SelectFilter
           paramName="type"
@@ -22,7 +22,7 @@ export default function EventsClient({ events }: { events: any[] }) {
             { label: "Hiking", value: "Hiking" },
           ]}
         />
-      </div>
+      </div> */}
 
       {/* Events */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

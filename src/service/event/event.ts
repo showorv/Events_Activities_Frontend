@@ -1,31 +1,44 @@
 import { serverFetch } from "@/lib/server-fetch";
 
 
-export async function getEvent(query?: { searchTerm?: string }) {
-  try {
-    const params = new URLSearchParams();
+// export async function getEvent(queryString?: string) {
+//   try {
+//     // const params = new URLSearchParams();
 
-    if (query?.searchTerm) {
-      params.append("searchTerm", query.searchTerm);
-    }
+//     // if (query?.searchTerm) {
+//     //   params.append("searchTerm", query.searchTerm);
+//     // }
 
-    const response = await serverFetch.get(
-      `/event/userEvent?${params.toString()}`
-    );
+//     const response = await serverFetch.get(
+//       `/event/userEvent${queryString ? `?${queryString}` : ""}`
+//     );
 
     
-    return response.json();
-  } catch (error: any) {
-    console.error("Fetch error:", error);
+//     return response.json();
+//   } catch (error: any) {
+//     console.error("Fetch error:", error);
 
-    return {
-      success: false,
-      message:
-        process.env.NODE_ENV === "development"
-          ? error.message
-          : "Something went wrong",
-      data: null,
-    };
+//     return {
+//       success: false,
+//       message:
+//         process.env.NODE_ENV === "development"
+//           ? error.message
+//           : "Something went wrong",
+//       data: null,
+//     };
+//   }
+// }
+export async function getEvent(queryString?: string) {
+  try {
+    const response = await fetch(`${API_BASE}/event/userEvent${queryString ? `?${queryString}` : ""}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      
+    });
+    return await response.json();
+  } catch (error: any) {
+    console.error(error);
+    return { success: false, message: error.message || "Something went wrong" };
   }
 }
 
@@ -34,12 +47,32 @@ export async function getTopEvent() {
     const response = await fetch(`${API_BASE}/event/userEvent`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      credentials: "include", 
+      
     });
     return await response.json();
   } catch (error: any) {
     console.error(error);
     return { success: false, message: error.message || "Something went wrong" };
+  }
+}
+
+export async function getSingleEvent(id: string) {
+  try {
+    const response = await fetch(`${API_BASE}/event/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      
+    });
+    return await response.json();
+  } catch (error: any) {
+    console.error(error);
+    return {
+      success: false,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Something went wrong",
+    };
   }
 }
 // export async function joinEvent(id: string) {
@@ -122,23 +155,23 @@ export async function initialPayment(id: string) {
 //     };
 //   }
 // }
-export async function getSingleEvent(id: string) {
-  try {
-    const response = await serverFetch.get(
-      `/event/${id}`
-    );
-    return await response.json();
-  } catch (error: any) {
-    console.error(error);
-    return {
-      success: false,
-      message:
-        process.env.NODE_ENV === "development"
-          ? error.message
-          : "Something went wrong",
-    };
-  }
-}
+// export async function getSingleEvent(id: string) {
+//   try {
+//     const response = await serverFetch.get(
+//       `/event/${id}`
+//     );
+//     return await response.json();
+//   } catch (error: any) {
+//     console.error(error);
+//     return {
+//       success: false,
+//       message:
+//         process.env.NODE_ENV === "development"
+//           ? error.message
+//           : "Something went wrong",
+//     };
+//   }
+// }
 
 export async function getClientSingleEvent(id: string) {
   try {
