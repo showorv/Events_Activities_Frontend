@@ -1,7 +1,7 @@
 import { getCookie } from "@/service/auth/tokenHandle";
 
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5500/api/v1";
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:5500/api/v1";
 
 // /auth/login
 const serverFetchHelper = async (endpoint: string, options: RequestInit): Promise<Response> => {
