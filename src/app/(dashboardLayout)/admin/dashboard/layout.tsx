@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+export const dynamic = "force-dynamic"
 
 interface AdminDashboardLayoutProps {
   children: ReactNode;
