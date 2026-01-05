@@ -10,7 +10,7 @@ export default function BecomeHostClient() {
     try {
       setLoading(true);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/become-host`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/user/become-host`, {
         method: "PATCH",
         credentials: "include",
       });
