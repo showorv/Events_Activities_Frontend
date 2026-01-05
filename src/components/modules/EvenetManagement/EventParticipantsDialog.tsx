@@ -14,47 +14,37 @@ import { IEventParticipant } from "@/types/event.interface";
 import { getInitials } from "@/lib/formatter";
 import TablePagination from "../Management/TablePagination";
 
-
 interface Props {
   open: boolean;
   onClose: () => void;
   participant: IEventParticipant[];
 }
 
-
 const EventParticipantsTableDialog = ({ open, onClose, participant }: Props) => {
- 
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [total, setTotal] = useState(0);
 
-
- 
-
-
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto bg-card text-foreground border border-border">
         <DialogHeader>
           <DialogTitle>Participants</DialogTitle>
-          {/* <div className="mt-2">
-          <SearchFilter paramName="searchTerm" placeholder="Search events by name type location" />
-          </div> */}
         </DialogHeader>
 
         <div className="overflow-x-auto mt-4">
-          <table className="w-full text-left border">
-            <thead className="bg-gray-100">
+          <table className="w-full text-left border border-border">
+            <thead className="bg-popover text-foreground">
               <tr>
-                <th className="px-4 py-2">User</th>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Status</th>
-                <th className="px-4 py-2">Payment</th>
+                <th className="px-4 py-2 border border-border">User</th>
+                <th className="px-4 py-2 border border-border">Email</th>
+                <th className="px-4 py-2 border border-border">Status</th>
+                <th className="px-4 py-2 border border-border">Payment</th>
               </tr>
             </thead>
             <tbody>
               {participant.map((p) => (
-                <tr key={p._id} className="border-t">
+                <tr key={p._id} className="border-t border-border hover:bg-background/50">
                   <td className="px-4 py-2 flex items-center gap-2">
                     <Avatar className="h-8 w-8">
                       {p.user.profileImage ? (
@@ -78,17 +68,23 @@ const EventParticipantsTableDialog = ({ open, onClose, participant }: Props) => 
                   </td>
                 </tr>
               ))}
+              {participant.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="text-center py-4 text-muted-foreground">
+                    No participants found
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
 
         <div className="mt-4">
-        <TablePagination
+          <TablePagination
             currentPage={page}
             totalPages={Math.ceil(total / limit)}
-            onPageChange={setPage} // must match TablePaginationProps
-            />
-
+            onPageChange={setPage}
+          />
         </div>
       </DialogContent>
     </Dialog>

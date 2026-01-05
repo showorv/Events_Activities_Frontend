@@ -27,7 +27,6 @@ export default function ChangePasswordFormClient() {
       setLoading(true);
       setMessage(null);
 
-      // Call your backend API directly
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,52 +52,56 @@ export default function ChangePasswordFormClient() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Change Password</h2>
+    <form className="max-w-md mx-auto bg-card p-6 rounded-xl border border-border shadow-sm space-y-4" onSubmit={handleSubmit}>
+      <h2 className="text-2xl font-bold text-foreground mb-4">Change Password</h2>
 
       {message && (
-        <div className={`p-2 rounded text-white ${message.type === "success" ? "bg-green-500" : "bg-red-500"}`}>
+        <div
+          className={`p-2 rounded text-primary-foreground ${
+            message.type === "success" ? "bg-primary" : "bg-destructive"
+          }`}
+        >
           {message.text}
         </div>
       )}
 
       <div>
-        <label className="block mb-1 font-medium">Old Password</label>
+        <label className="block mb-1 font-medium text-foreground">Old Password</label>
         <input
           type="password"
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter old password"
+          className="w-full bg-background border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
 
       <div>
-        <label className="block mb-1 font-medium">New Password</label>
+        <label className="block mb-1 font-medium text-foreground">New Password</label>
         <input
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter new password"
+          className="w-full bg-background border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
 
       <div>
-        <label className="block mb-1 font-medium">Confirm New Password</label>
+        <label className="block mb-1 font-medium text-foreground">Confirm New Password</label>
         <input
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Confirm new password"
+          className="w-full bg-background border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-primary hover:bg-chart-5 text-white py-2 rounded-lg transition disabled:opacity-60"
+        className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition disabled:opacity-60"
       >
         {loading ? "Changing..." : "Change Password"}
       </button>

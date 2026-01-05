@@ -14,27 +14,44 @@ export default function JoinEventModal({ event, onClose }: Props) {
   const [joined, setJoined] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  console.log("eventid",event._id);
-  
+
   const isFree = event.joiningFee === 0;
 
-  // Join Event
+  const redirectToLogin = () => {
+    window.location.href = `/login?redirect=/events/${event._id}`;
+  };
+
+
   const handleJoin = async () => {
     setLoading(true);
+
     try {
       const res = await joinEvent(event._id);
 
+    
+      if (res?.message === "access token undefined") {
+        toast.error("Please login to join the event");
+        redirectToLogin();
+        return;
+      }
+
       if (!res.success) {
         toast.error(res.message || "Something went wrong while joining.");
-        setLoading(false);
         return;
       }
 
       setJoined(true);
 
+   
       if (!isFree) {
-        // Initialize payment
         const paymentRes = await initialPayment(event._id);
+
+        if (paymentRes?.message === "access token undefined") {
+          toast.error("Session expired. Please login again.");
+          redirectToLogin();
+          return;
+        }
+
         if (paymentRes.success && paymentRes.data?.paymentUrl) {
           setPaymentUrl(paymentRes.data.paymentUrl);
         } else {
@@ -49,7 +66,6 @@ export default function JoinEventModal({ event, onClose }: Props) {
     }
   };
 
-  // Go to payment
   const handlePayment = () => {
     if (paymentUrl) {
       window.location.href = paymentUrl;
@@ -58,40 +74,46 @@ export default function JoinEventModal({ event, onClose }: Props) {
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
       <motion.div
-        className="bg-white p-6 rounded-xl w-96"
-        initial={{ scale: 0.8 }}
+        className="bg-card text-card-foreground p-6 rounded-2xl w-96 border border-border shadow-xl"
+        initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
       >
-        <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
+        <h2 className="text-xl font-semibold mb-3">{event.name}</h2>
 
-        {/* Before join */}
+        {/* BEFORE JOIN */}
         {!joined && (
           <>
             {isFree ? (
-              <p>This event is free. Join now?</p>
+              <p className="text-muted-foreground">
+                This event is free. Do you want to join?
+              </p>
             ) : (
-              <p>
-                Joining fee: <b>{event.joiningFee} ৳</b>
+              <p className="text-muted-foreground">
+                Joining fee:{" "}
+                <span className="font-semibold text-foreground">
+                  ৳{event.joiningFee}
+                </span>
               </p>
             )}
 
-            <div className="flex gap-3 mt-4">
+            <div className="flex gap-3 mt-6">
               <button
                 onClick={onClose}
-                className="flex-1 py-2 border rounded-lg"
                 disabled={loading}
+                className="flex-1 py-2 rounded-lg border border-border bg-secondary text-secondary-foreground hover:bg-accent transition"
               >
                 Cancel
               </button>
+
               <button
                 onClick={handleJoin}
-                className="flex-1 py-2 bg-primary text-white rounded-lg"
                 disabled={loading}
+                className="flex-1 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition"
               >
                 {loading ? "Processing..." : "Confirm"}
               </button>
@@ -99,18 +121,19 @@ export default function JoinEventModal({ event, onClose }: Props) {
           </>
         )}
 
-        {/* After join */}
+        {/* AFTER JOIN */}
         {joined && (
           <>
             {isFree ? (
               <>
-                <p className="text-green-600 font-medium">
+                <p className="font-medium text-primary">
                   Successfully Joined 🎉
                 </p>
-                <div className="flex justify-end mt-4">
+
+                <div className="flex justify-end mt-5">
                   <button
                     onClick={onClose}
-                    className="py-2 px-4 border rounded-lg"
+                    className="px-4 py-2 rounded-lg border border-border bg-secondary text-secondary-foreground hover:bg-accent transition"
                   >
                     Close
                   </button>
@@ -118,20 +141,22 @@ export default function JoinEventModal({ event, onClose }: Props) {
               </>
             ) : (
               <>
-                <p className="text-yellow-600 font-medium">
+                <p className="font-medium text-primary">
                   Successfully Joined 🎉 Proceed to Payment 💳
                 </p>
-                <div className="flex gap-3 mt-4">
+
+                <div className="flex gap-3 mt-5">
                   <button
                     onClick={onClose}
-                    className="flex-1 py-2 border rounded-lg"
+                    className="flex-1 py-2 rounded-lg border border-border bg-secondary text-secondary-foreground hover:bg-accent transition"
                   >
                     Cancel
                   </button>
+
                   <button
                     onClick={handlePayment}
-                    className="flex-1 py-2 bg-primary text-white rounded-lg"
                     disabled={!paymentUrl}
+                    className="flex-1 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition"
                   >
                     {paymentUrl ? "Pay Now" : "Initializing..."}
                   </button>

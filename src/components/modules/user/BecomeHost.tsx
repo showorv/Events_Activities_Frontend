@@ -30,14 +30,16 @@ export default function BecomeHostClient() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md text-center">
+    <div className="max-w-md mx-auto bg-card text-foreground p-6 rounded-xl shadow-md text-center border border-border">
       <h2 className="text-2xl font-bold mb-4">Want to become a host?</h2>
-      <p className="mb-6">Click the button below to apply and start hosting events.</p>
+      <p className="mb-6 text-muted-foreground">
+        Click the button below to apply and start hosting events.
+      </p>
 
       <button
         onClick={handleBecomeHost}
         disabled={loading}
-        className="bg-primary hover:bg-chart-5 text-white py-2 px-6 rounded-lg transition disabled:opacity-60"
+        className="bg-primary hover:bg-chart-5 text-primary-foreground py-2 px-6 rounded-lg transition disabled:opacity-60"
       >
         {loading ? "Sending Request..." : "Send Request"}
       </button>
