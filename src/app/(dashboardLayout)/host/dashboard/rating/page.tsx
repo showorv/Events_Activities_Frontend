@@ -1,5 +1,6 @@
 import HostRatingsTable from "@/components/modules/shared/HostRatingTable";
 
+export const dynamic = "force-dynamic"
 
 export default function HostDashboardPage() {
   return (

@@ -6,6 +6,7 @@ import TablePagination from "@/components/modules/Management/TablePagination";
 import { queryStringFormatter } from "@/lib/formatter";
 import UsersTable from "@/components/modules/UserManagement/UserTable";
 import { getAllUsers } from "@/service/user/user";
+export const dynamic = "force-dynamic"
 
 const UserManagementPage = async ({
   searchParams,
