@@ -42,11 +42,11 @@ export default function RootLayout({
 
         {children}
         <Toaster position="top-right" richColors/>
-        <Suspense fallback={null}>
+        {/* <Suspense fallback={null}> */}
 
         <LoginSuccessToast />
         <LogoutSuccessToast />
-        </Suspense>
+        {/* </Suspense> */}
         </ThemeProvider>
       </body>
     </html>
