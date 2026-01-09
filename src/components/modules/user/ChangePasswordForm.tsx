@@ -27,7 +27,7 @@ export default function ChangePasswordFormClient() {
       setLoading(true);
       setMessage(null);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/change-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
