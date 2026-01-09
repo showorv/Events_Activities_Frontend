@@ -187,3 +187,19 @@ export const submitContact = async (data: ContactPayload) => {
     throw new Error(err.message || "Something went wrong");
   }
 };
+
+export const becomeHost = async () => {
+  try {
+    const res = await fetch(`${API_BASE}/user/become-host`, {
+      method: "PATCH",
+      credentials: "include",
+    });
+
+    return await res.json();
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "Something went wrong",
+    };
+  }
+};
