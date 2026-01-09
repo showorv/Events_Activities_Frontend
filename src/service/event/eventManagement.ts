@@ -147,7 +147,7 @@ export async function getAllAdminEvents(queryString?: string) {
     newFormData.append("data", JSON.stringify(validation.data));
 
     if (formData.get("file")) {
-      newFormData.append("file", formData.get("file") as Blob);
+      newFormData.append("file", formData.get("file") as Blob ||  new Blob([]));
     }
   
       const response = await serverFetch.patch(`/event/${id}`, {
