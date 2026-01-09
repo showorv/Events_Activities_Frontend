@@ -206,14 +206,14 @@ export async function getAllAdminEvents(queryString?: string) {
         
       } else {
        
-        body = JSON.stringify({ data: validation.data });
+       body = JSON.stringify(validation.data);
         headers["Content-Type"] = "application/json";
       }
   
  
            const response = await serverFetch.patch(`/event/${id}`, {
 
-        body: body
+         body
       });
   
    
