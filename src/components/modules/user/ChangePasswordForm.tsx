@@ -1,6 +1,5 @@
 "use client";
 
-import { serverFetch } from "@/lib/server-fetch";
 import { changePassword } from "@/service/user/user";
 import { useState, FormEvent } from "react";
 import { toast } from "sonner";
@@ -10,24 +9,26 @@ export default function ChangePasswordFormClient() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  // const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!oldPassword || !newPassword || !confirmPassword) {
-      setMessage({ type: "error", text: "All fields are required" });
+      // setMessage({ type: "error", text: "All fields are required" });
+      toast.error("All fields are required")
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setMessage({ type: "error", text: "New password and confirm password do not match" });
+      // setMessage({ type: "error", text: "New password and confirm password do not match" });
+      toast.error("New password and confirm password do not match")
       return;
     }
 
     try {
       setLoading(true);
-      setMessage(null);
+   
 
       // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/change-password`, {
       //   method: "POST",
@@ -41,10 +42,11 @@ export default function ChangePasswordFormClient() {
       // })
 
       const data = await changePassword(oldPassword,newPassword)
-
+      console.log("change password",data);
+      
      
 
-      setMessage({ type: data.success ? "success" : "error", text: data.message });
+      // setMessage({ type: data.success ? "success" : "error", text: data.message });
 
       if (data.success) {
         toast.success(data.message);
@@ -53,7 +55,7 @@ export default function ChangePasswordFormClient() {
         setConfirmPassword("");
       }
     } catch (err: any) {
-      setMessage({ type: "error", text: err.message || "Something went wrong" });
+      toast.error(  err.message || "Something went wrong" );
     } finally {
       setLoading(false);
     }
@@ -63,15 +65,7 @@ export default function ChangePasswordFormClient() {
     <form className="max-w-md mx-auto bg-card p-6 rounded-xl border border-border shadow-sm space-y-4" onSubmit={handleSubmit}>
       <h2 className="text-2xl font-bold text-foreground mb-4">Change Password</h2>
 
-      {message && (
-        <div
-          className={`p-2 rounded text-primary-foreground ${
-            message.type === "success" ? "bg-primary" : "bg-destructive"
-          }`}
-        >
-          {message.text}
-        </div>
-      )}
+ 
 
       <div>
         <label className="block mb-1 font-medium text-foreground">Old Password</label>

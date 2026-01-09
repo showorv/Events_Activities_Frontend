@@ -151,9 +151,7 @@ export async function getAllAdminEvents(queryString?: string) {
     }
   
       const response = await serverFetch.patch(`/event/${id}`, {
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
+
         body: newFormData,
       });
   
