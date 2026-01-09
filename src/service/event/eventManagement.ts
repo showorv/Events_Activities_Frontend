@@ -106,131 +106,132 @@ export async function getAllAdminEvents(queryString?: string) {
     }
   }
   
-  export async function updateEvent(
-    id: string,
-    _prevState: any,
-    formData: FormData
-  ) {
-    try {
-      const payload: Partial<IEvent> = {
-        name: formData.get("name") as string,
-        type: formData.get("type") as string,
-  
-        date: formData.get("date")
-          ? new Date(formData.get("date") as string)
-          : undefined,
-  
-        time: formData.get("time") as string,
-        location: formData.get("location") as string,
-  
-        minParticipants: formData.get("minParticipants")
-          ? Number(formData.get("minParticipants"))
-          : undefined,
-  
-        maxParticipants: formData.get("maxParticipants")
-          ? Number(formData.get("maxParticipants"))
-          : undefined,
-  
-        joiningFee: formData.get("joiningFee")
-          ? Number(formData.get("joiningFee"))
-          : undefined,
-  
-        description: formData.get("description") as string,
-        status: formData.get("status") as Status
-      };
-  
-      const validation = zodValidator(payload, updateEventZodSchema);
-      if (!validation.success) {
-        return validation;
-      }
-
-      const newFormData = new FormData();
-      if(formData.get("data")){
-
-        newFormData.append("data", JSON.stringify(validation.data));
-      }
-
-    if (formData.get("file")) {
-      newFormData.append("file", formData.get("file") as Blob ||  new Blob([]));
-    }
-  
-      const response = await serverFetch.patch(`/event/${id}`, {
-
-        body: newFormData,
-      });
-  
-      const result=  await response.json();
-    return result
-    } catch (error: any) {
-      console.log(error);
-      return {
-        success: false,
-        message:
-          process.env.NODE_ENV === "development"
-            ? error.message
-            : "Something went wrong",
-      };
-    }
-  }
-
   // export async function updateEvent(
   //   id: string,
   //   _prevState: any,
   //   formData: FormData
   // ) {
   //   try {
-     
   //     const payload: Partial<IEvent> = {
   //       name: formData.get("name") as string,
   //       type: formData.get("type") as string,
-  //       date: formData.get("date") ? new Date(formData.get("date") as string) : undefined,
+  
+  //       date: formData.get("date")
+  //         ? new Date(formData.get("date") as string)
+  //         : undefined,
+  
   //       time: formData.get("time") as string,
   //       location: formData.get("location") as string,
-  //       minParticipants: formData.get("minParticipants") ? Number(formData.get("minParticipants")) : undefined,
-  //       maxParticipants: formData.get("maxParticipants") ? Number(formData.get("maxParticipants")) : undefined,
-  //       joiningFee: formData.get("joiningFee") ? Number(formData.get("joiningFee")) : undefined,
+  
+  //       minParticipants: formData.get("minParticipants")
+  //         ? Number(formData.get("minParticipants"))
+  //         : undefined,
+  
+  //       maxParticipants: formData.get("maxParticipants")
+  //         ? Number(formData.get("maxParticipants"))
+  //         : undefined,
+  
+  //       joiningFee: formData.get("joiningFee")
+  //         ? Number(formData.get("joiningFee"))
+  //         : undefined,
+  
   //       description: formData.get("description") as string,
+  //       status: formData.get("status") as Status
   //     };
   
-      
   //     const validation = zodValidator(payload, updateEventZodSchema);
-  //     if (!validation.success) return validation;
-  
-      
-  //     let body: FormData | string;
-  //     let headers: Record<string, string> = {};
-  //     const file = formData.get("file") as File | null;
-  
-  //     if (file && file.size > 0) {
-      
-  //       const newFormData = new FormData();
-  //       newFormData.append("data", JSON.stringify(validation.data));
-  //       newFormData.append("file", file);
-  //       body = newFormData;
-        
-  //     } else {
-       
-  //      body = JSON.stringify(validation.data);
-  //       headers["Content-Type"] = "application/json";
+  //     if (!validation.success) {
+  //       return validation;
   //     }
-  
- 
-  //          const response = await serverFetch.patch(`/event/${id}`, {
 
-  //        body
+  //     const newFormData = new FormData();
+  //     if(formData.get("data")){
+
+  //       newFormData.append("data", JSON.stringify(validation.data));
+  //     }
+
+  //   if (formData.get("file")) {
+  //     newFormData.append("file", formData.get("file") as Blob ||  new Blob([]));
+  //   }
+  
+  //     const response = await serverFetch.patch(`/event/${id}`, {
+
+  //       body: newFormData,
   //     });
   
-   
-  //     const result = await response.json();
-  //     return result;
+  //     const result=  await response.json();
+  //   return result
   //   } catch (error: any) {
-  //     console.error(error);
+  //     console.log(error);
   //     return {
   //       success: false,
-  //       message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong",
+  //       message:
+  //         process.env.NODE_ENV === "development"
+  //           ? error.message
+  //           : "Something went wrong",
   //     };
   //   }
   // }
+
+  export async function updateEvent(
+    id: string,
+    _prevState: any,
+    formData: FormData
+  ) {
+    try {
+     
+      const payload: Partial<IEvent> = {
+        name: formData.get("name") as string,
+        type: formData.get("type") as string,
+        date: formData.get("date") ? new Date(formData.get("date") as string) : undefined,
+        time: formData.get("time") as string,
+        location: formData.get("location") as string,
+        minParticipants: formData.get("minParticipants") ? Number(formData.get("minParticipants")) : undefined,
+        maxParticipants: formData.get("maxParticipants") ? Number(formData.get("maxParticipants")) : undefined,
+        joiningFee: formData.get("joiningFee") ? Number(formData.get("joiningFee")) : undefined,
+        description: formData.get("description") as string,
+        status: formData.get("status") as Status
+      };
+  
+      
+      const validation = zodValidator(payload, updateEventZodSchema);
+      if (!validation.success) return validation;
+  
+      
+      let body: FormData | string;
+      let headers: Record<string, string> = {};
+      const file = formData.get("file") as File | null;
+  
+      if (file && file.size > 0) {
+      
+        const newFormData = new FormData();
+        newFormData.append("data", JSON.stringify(validation.data));
+        newFormData.append("file", file);
+        body = newFormData;
+        
+      } else {
+       
+       body = JSON.stringify(validation.data);
+        headers["Content-Type"] = "application/json";
+      }
+  
+ 
+           const response = await serverFetch.patch(`/event/${id}`, {
+
+         body
+      });
+  
+   
+      const result = await response.json();
+      return result;
+    } catch (error: any) {
+      console.error(error);
+      return {
+        success: false,
+        message: process.env.NODE_ENV === "development" ? error.message : "Something went wrong",
+      };
+    }
+  }
   
   
   export async function getSingleEvent(id: string) {
