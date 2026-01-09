@@ -272,15 +272,7 @@ export default function Navbar({ userInfo }: NavbarProps) {
                         Become Host
                       </Link>
                     )}
-                    <button
-                      className="px-4 py-2 hover:bg-accent/10 text-foreground text-left w-full"
-                      onClick={() => {
-                        localStorage.removeItem("token");
-                        window.location.href = "/login";
-                      }}
-                    >
-                      Logout
-                    </button>
+                    <LogoutButton />
                   </div>
                 </motion.div>
               )}
