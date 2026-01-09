@@ -137,10 +137,12 @@ export async function getAllUsers(queryString?: string) {
 
 export const getAllHostRequests = async () => {
   try {
-    const res = await fetch(`${API_BASE}/user/request-host`, {
-      method: "GET",
-      credentials: "include",
-    });
+    // const res = await fetch(`${API_BASE}/user/request-host`, {
+    //   method: "GET",
+    //   credentials: "include",
+    // });
+    const res = await serverFetch.get(`/user/request-host`)
+
     return await res.json();
   } catch (error: any) {
     console.error(error);
