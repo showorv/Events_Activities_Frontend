@@ -212,7 +212,7 @@ export async function getAllAdminEvents(queryString?: string) {
     const res = await serverFetch.get(
       `/event/view/${eventId}${query}`
     );
-    return res.json();
+    return await res.json();
   };
   export const getEventRevenue = async () => {
     try {

@@ -190,10 +190,11 @@ export const submitContact = async (data: ContactPayload) => {
 
 export const becomeHost = async () => {
   try {
-    const res = await fetch(`${API_BASE}/user/become-host`, {
-      method: "PATCH",
-      credentials: "include",
-    });
+    // const res = await fetch(`${API_BASE}/user/become-host`, {
+    //   method: "PATCH",
+    //   credentials: "include",
+    // });
+    const res = await serverFetch.patch(`/user/become-host`)
 
     return await res.json();
   } catch (error: any) {
