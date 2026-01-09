@@ -37,5 +37,6 @@ export interface IEvent {
     description?: string;
     image?: string;
     participants?: IEventParticipant[]
+
   }
   
