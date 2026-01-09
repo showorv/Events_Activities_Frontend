@@ -100,12 +100,15 @@ const API_BASE = process.env.NEXT_PUBLIC_BASE_API_URL
 
 export async function joinEvent(id: string) {
   try {
-    const response = await fetch(`${API_BASE}/participation/join/${id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include", 
-    });
-    return await response.json();
+    // const response = await fetch(`${API_BASE}/participation/join/${id}`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   credentials: "include", 
+    // });
+    const res = await serverFetch.post(`/participation/join/${id}`,{
+      headers: { "Content-Type": "application/json" }
+    })
+    return await res.json();
   } catch (error: any) {
     console.error(error);
     return { success: false, message: error.message || "Something went wrong" };
@@ -114,12 +117,15 @@ export async function joinEvent(id: string) {
 
 export async function leaveEvent(id: string) {
   try {
-    const response = await fetch(`${API_BASE}/participation/leave/${id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include", 
-    });
-    return await response.json();
+    // const response = await fetch(`${API_BASE}/participation/leave/${id}`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   credentials: "include", 
+    // });
+    const res = await serverFetch.post(`/participation/leave/${id}`,{
+      headers: { "Content-Type": "application/json" }
+    })
+    return await res.json();
   } catch (error: any) {
     console.error(error);
     return { success: false, message: error.message || "Something went wrong" };
@@ -127,12 +133,15 @@ export async function leaveEvent(id: string) {
 }
 export async function initialPayment(id: string) {
   try {
-    const response = await fetch(`${API_BASE}/payment/init-payment/${id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include", 
-    });
-    return await response.json();
+    // const response = await fetch(`${API_BASE}/payment/init-payment/${id}`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   credentials: "include", 
+    // });
+    const res = await serverFetch.post(`/payment/init-payment/${id}`,{
+      headers: { "Content-Type": "application/json" }
+    })
+    return await res.json();
   } catch (error: any) {
     console.error(error);
     return { success: false, message: error.message || "Something went wrong" };

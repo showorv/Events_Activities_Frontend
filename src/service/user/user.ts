@@ -42,12 +42,16 @@ export const getMe = async () => {
 
 export async function updateUser(id: string,formData: FormData) {
     try {
-      const response = await fetch(`${API_BASE}/user/${id}`, {
-        method: "PATCH",
-        // headers: { "Content-Type": "application/json" },
-        body: formData,
-        credentials: "include", 
-      });
+      // const response = await fetch(`${API_BASE}/user/${id}`, {
+      //   method: "PATCH",
+      //   // headers: { "Content-Type": "application/json" },
+      //   body: formData,
+      //   credentials: "include", 
+      // });
+
+      const response = await serverFetch.patch(`/user/${id}`, {
+        body: formData
+      })
       return await response.json();
     } catch (error: any) {
       console.error(error);
@@ -73,10 +77,11 @@ export async function updateUser(id: string,formData: FormData) {
 
 export async function blockUser(userId: string) {
   try {
-    const res = await fetch(`${API_BASE}/user/block/${userId}`, {
-      method: "PATCH",
-      credentials: "include",
-    });
+    // const res = await fetch(`${API_BASE}/user/block/${userId}`, {
+    //   method: "PATCH",
+    //   credentials: "include",
+    // });
+    const res = await serverFetch.patch(`/user/block/${userId}`)
 
     return await res.json();
   } catch (error: any) {
@@ -89,11 +94,11 @@ export async function blockUser(userId: string) {
 
 export async function unblockUser(userId: string) {
   try {
-    const res = await fetch(`${API_BASE}/user/unblock/${userId}`, {
-      method: "PATCH",
-      credentials: "include",
-    });
-
+    // const res = await fetch(`${API_BASE}/user/unblock/${userId}`, {
+    //   method: "PATCH",
+    //   credentials: "include",
+    // });
+    const res = await serverFetch.patch(`/user/unblock/${userId}`)
     return await res.json();
   } catch (error: any) {
     return {
@@ -152,10 +157,12 @@ export const getAllHostRequests = async () => {
 
 export const approveHostRequest = async (userId: string) => {
   try {
-    const res = await fetch(`${API_BASE}/user/approve/${userId}`, {
-      method: "PATCH",
-      credentials: "include",
-    });
+    // const res = await fetch(`${API_BASE}/user/approve/${userId}`, {
+    //   method: "PATCH",
+    //   credentials: "include",
+    // });
+
+    const res = await serverFetch.patch(`/user/approve/${userId}`)
     return await res.json();
   } catch (error: any) {
     console.error(error);

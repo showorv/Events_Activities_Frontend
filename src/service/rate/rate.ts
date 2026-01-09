@@ -1,16 +1,22 @@
 "use server"
 
+import { serverFetch } from "@/lib/server-fetch";
+
 const API_BASE = process.env.NEXT_PUBLIC_BASE_API_URL
 
 export const rateHost = async (payload: { hostId: string; eventId: string; stars: number }) => {
     try {
-      const res = await fetch(`${API_BASE}/rating/rate`, {
-        method: "POST",
+      // const res = await fetch(`${API_BASE}/rating/rate`, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   credentials: "include",
+      //   body: JSON.stringify(payload),
+      // });
+      const res = await serverFetch.post(`/rating/rate`,{
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
-  
+        body: JSON.stringify(payload)
+      })
+
       return await res.json();
     } catch (error: any) {
       console.error(error);
@@ -20,10 +26,11 @@ export const rateHost = async (payload: { hostId: string; eventId: string; stars
   
   export const getHostRatings = async () => {
     try {
-      const res = await fetch(`${API_BASE}/rating/getRating`, {
-        method: "GET",
-        credentials: "include", // include cookies for auth
-      });
+      // const res = await fetch(`${API_BASE}/rating/getRating`, {
+      //   method: "GET",
+      //   credentials: "include", // include cookies for auth
+      // });
+      const res = await serverFetch.get(`/rating/getRating`)
       return await res.json();
     } catch (err: any) {
       console.error(err);

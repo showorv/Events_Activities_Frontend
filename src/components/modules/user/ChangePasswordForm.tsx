@@ -1,5 +1,6 @@
 "use client";
 
+import { serverFetch } from "@/lib/server-fetch";
 import { useState, FormEvent } from "react";
 import { toast } from "sonner";
 
@@ -27,12 +28,16 @@ export default function ChangePasswordFormClient() {
       setLoading(true);
       setMessage(null);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/change-password`, {
-        method: "POST",
+      // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/change-password`, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   credentials: "include",
+      //   body: JSON.stringify({ oldPassword, newPassword }),
+      // });
+      const res = await serverFetch.post(`/auth/change-password`,{
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ oldPassword, newPassword }),
-      });
+        body: JSON.stringify({ oldPassword, newPassword })
+      })
 
       const data = await res.json();
 
