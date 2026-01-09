@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { UserRole, getDefaultDashboardRoute, getRouteOwner, isAuthRoute } from './types/authTypeProxy';
-import { deleteCookie } from './service/auth/tokenHandle';
+import { deleteCookie, getCookie } from './service/auth/tokenHandle';
 
 
 
@@ -13,7 +13,8 @@ export async function proxy(request: NextRequest) {
    
     const pathname = request.nextUrl.pathname;
 
-    const accessToken = request.cookies.get("accessToken")?.value || null;
+    // const accessToken = request.cookies.get("accessToken")?.value || null;
+    const accessToken = await getCookie("accessToken") || null;
 
     
 
@@ -141,6 +142,6 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico, sitemap.xml, robots.txt (metadata files)
          */
-        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.well-known|_next|become-host).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.well-known).*)',
     ],
 }
