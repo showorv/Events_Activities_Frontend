@@ -17,18 +17,21 @@ export const createEventZodSchema = z.object({
   description: z.string().optional(),
 });
 
+
+
 export const updateEventZodSchema = z.object({
   name: z.string().min(3).optional(),
   type: z.string().min(3).optional(),
-
-  date: z.coerce.date().optional(),
+  date: z
+    .preprocess((val) => (val === "" ? undefined : val), z.date().optional()),
   time: z.string().optional(),
-
   location: z.string().optional(),
-
-  minParticipants: z.number().min(1).optional(),
-  maxParticipants: z.number().min(1).optional(),
-
-  joiningFee: z.number().optional(),
+  minParticipants: z
+    .preprocess((val) => (val === "" || val === null ? undefined : Number(val)), z.number().min(1).optional()),
+  maxParticipants: z
+    .preprocess((val) => (val === "" || val === null ? undefined : Number(val)), z.number().min(1).optional()),
+  joiningFee: z
+    .preprocess((val) => (val === "" || val === null ? undefined : Number(val)), z.number().optional()),
   description: z.string().optional(),
 });
+
