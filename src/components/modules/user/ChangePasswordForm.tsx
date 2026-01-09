@@ -40,9 +40,9 @@ export default function ChangePasswordFormClient() {
       //   body: JSON.stringify({ oldPassword, newPassword })
       // })
 
-      const res = await changePassword(oldPassword,newPassword)
+      const data = await changePassword(oldPassword,newPassword)
 
-      const data = await res.json();
+     
 
       setMessage({ type: data.success ? "success" : "error", text: data.message });
 

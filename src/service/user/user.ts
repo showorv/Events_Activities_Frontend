@@ -215,10 +215,7 @@ export const becomeHost = async () => {
 };
 export const changePassword = async (oldPassword: string, newPassword: string) => {
   try {
-    // const res = await fetch(`${API_BASE}/user/become-host`, {
-    //   method: "PATCH",
-    //   credentials: "include",
-    // });
+ 
     const res = await serverFetch.post(`/auth/change-password`,{
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ oldPassword, newPassword })
