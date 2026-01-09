@@ -1,4 +1,8 @@
+"use server"
+
+
 import { serverFetch } from "@/lib/server-fetch";
+
 const API_BASE = process.env.NEXT_PUBLIC_BASE_API_URL
 
 
