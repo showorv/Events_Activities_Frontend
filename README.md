@@ -7,8 +7,8 @@ It allows users to explore, join, and host events while providing a clean and in
 
 ## 🌐 Live Deployment
 
-- **Frontend:** [https://ride-booking-frontend-pi.vercel.app](https://ride-booking-frontend-pi.vercel.app)  
-- **Backend API:** [https://ride-booking-api-backend.vercel.app](https://ride-booking-api-backend.vercel.app)
+- **Frontend:** [https://events-activities-frontend-ochre.vercel.app](https://events-activities-frontend-ochre.vercel.app)  
+- **Backend API:** [https://events-activities-frontend-ochre.vercel.app](https://events-activities-frontend-ochre.vercel.app)
 
 ---
 
