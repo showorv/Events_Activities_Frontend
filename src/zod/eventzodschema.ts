@@ -1,5 +1,6 @@
 
 import { z } from "zod";
+export const EventStatusEnum = z.enum(["OPEN", "FULL", "CANCELLED", "COMPLETED"]);
 
 export const createEventZodSchema = z.object({
   name: z.string().min(3),
@@ -15,6 +16,7 @@ export const createEventZodSchema = z.object({
 
   joiningFee: z.number().optional(),
   description: z.string().optional(),
+  status: EventStatusEnum.optional(),
 });
 
 
@@ -33,5 +35,6 @@ export const updateEventZodSchema = z.object({
   joiningFee: z
     .preprocess((val) => (val === "" || val === null ? undefined : Number(val)), z.number().optional()),
   description: z.string().optional(),
+  status: EventStatusEnum.optional(),
 });
 

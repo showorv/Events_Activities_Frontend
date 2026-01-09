@@ -206,7 +206,7 @@ export async function getAllAdminEvents(queryString?: string) {
         
       } else {
        
-        body = JSON.stringify(validation.data);
+        body = JSON.stringify({ data: validation.data });
         headers["Content-Type"] = "application/json";
       }
   
