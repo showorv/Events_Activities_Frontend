@@ -17,7 +17,10 @@ export default function TopEventsSection() {
     getTopEvent().then((res:any) => {
         console.log("top event",res);
         
-      if (res.success) setEvent(res.data?.result || []);
+        if (res.success) {
+          // Take only the top 3 events
+          setEvent((res.data?.result || []).slice(0, 3));
+        }
     });
   }, []);
 
