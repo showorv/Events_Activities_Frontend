@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Facebook, Instagram, Twitter, Github } from "lucide-react";
+import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Footer() {
@@ -19,10 +19,10 @@ export default function Footer() {
 
           {/* Social Icons */}
           <div className="flex gap-4 mt-5">
-            {[Facebook, Instagram, Twitter, Github].map((Icon, i) => (
+            {[ Github].map((Icon, i) => (
               <motion.a
                 key={i}
-                href="#"
+                href="https://github.com/showorv"
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 className="p-2 bg-muted rounded-full hover:bg-accent transition"
@@ -49,9 +49,9 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Support</h3>
           <ul className="space-y-2 text-muted-foreground">
-            <li><Link href="/" className="hover:text-primary">Help Center</Link></li>
-            <li><Link href="/" className="hover:text-primary">Terms & Conditions</Link></li>
-            <li><Link href="/" className="hover:text-primary">Privacy Policy</Link></li>
+            <li><Link href="/contact" className="hover:text-primary">Help Center</Link></li>
+            {/* <li><Link href="/" className="hover:text-primary">Terms & Conditions</Link></li>
+            <li><Link href="/" className="hover:text-primary">Privacy Policy</Link></li> */}
           </ul>
         </div>
 
