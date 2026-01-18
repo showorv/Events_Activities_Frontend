@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { getAllHostRequests } from "@/service/user/user";
 import { IUser } from "@/types/user.interface";
 import { hostRequestColumns } from "./ApproveColoum";
+import Loader from "../shared/Loader";
 
 const HostRequestsTable = () => {
   const [hostRequests, setHostRequests] = useState<IUser[]>([]);
@@ -33,7 +34,7 @@ const HostRequestsTable = () => {
     <div className="space-y-4">
       <h2 className="text-2xl font-semibold">Host Requests</h2>
       {loading ? (
-        <p>Loading...</p>
+        <p><Loader /></p>
       ) : hostRequests.length === 0 ? (
         <p>No host requests found.</p>
       ) : (

@@ -16,7 +16,7 @@ const EventsPage = async ({
   const result = await getEvent(queryString);
 
   return (
-  <div className="max-w-7xl mx-auto mt-25">
+  <div className="max-w-7xl mx-auto mt-25 px-4">
   <div className="flex gap-2 mt-20 mb-3 mx-full">
         <SearchFilter paramName="searchTerm" placeholder="Search events by name type" />
         {/* <SelectFilter

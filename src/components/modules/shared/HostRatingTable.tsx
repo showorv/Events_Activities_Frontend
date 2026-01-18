@@ -2,6 +2,7 @@
 
 import { getHostRatings } from "@/service/rate/rate";
 import { useEffect, useState } from "react";
+import Loader from "./Loader";
 
 
 interface IUser {
@@ -49,7 +50,7 @@ export default function HostRatingsTable() {
     fetchRatings();
   }, []);
 
-  if (loading) return <p>Loading ratings...</p>;
+  if (loading) return <p><Loader /></p>;
   if (!data) return <p>No ratings found.</p>;
 
   return (

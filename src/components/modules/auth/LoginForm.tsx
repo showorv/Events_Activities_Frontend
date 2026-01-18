@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 
 
 
@@ -15,6 +15,10 @@ import InputFieldError from "../shared/InputFieldError";
 
 const LoginForm = () => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
+
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   // const getFieldError = (fieldName: string) => {
   //   if (state && state.errors) {
@@ -41,8 +45,15 @@ const LoginForm = () => {
     }
   }, [state]);
   
+  const handleDemoLogin = (email: string, password: string) => {
+    if (emailRef.current && passwordRef.current && formRef.current) {
+      emailRef.current.value = email;
+      passwordRef.current.value = password;
+      formRef.current.requestSubmit(); 
+    }
+  };
   return (
-    <form action={formAction}>
+    <form action={formAction} ref={formRef}>
       <FieldGroup>
         <div className="grid grid-cols-1 gap-4">
           {/* Email */}
@@ -50,6 +61,7 @@ const LoginForm = () => {
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
               id="email"
+              ref={emailRef}
               name="email"
               type="email"
               placeholder="m@example.com"
@@ -69,6 +81,7 @@ const LoginForm = () => {
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
               id="password"
+              ref={passwordRef}
               name="password"
               type="password"
               placeholder="Enter your password"
@@ -104,6 +117,32 @@ const LoginForm = () => {
             </FieldDescription> */}
           </Field>
         </FieldGroup>
+
+        <div className="mt-4 grid grid-cols-3 gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => handleDemoLogin("yousufshowrov101@gmail.com", "yousuf12")}
+          >
+            Demo Admin
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => handleDemoLogin("showrov124@gmail.com", "hello12")}
+          >
+            Demo Host
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => handleDemoLogin("showrov121@gmail.com", "hello123")}
+          >
+            Demo User
+          </Button>
+        </div>
       </FieldGroup>
     </form>
   );

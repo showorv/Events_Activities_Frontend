@@ -63,6 +63,18 @@ export const hostNavItems: NavSection[] = [
                 icon: "Star", // ✅ String
                 roles: ["HOST"],
             },
+            {
+                title: "Help/Support",
+                href: "/host/dashboard/help",
+                icon: "HandHelping", // ✅ String
+                roles: ["HOST"],
+            },
+            {
+                title: "Terms & Condition",
+                href: "/host/dashboard/terms",
+                icon: "ReceiptText", // ✅ String
+                roles: ["HOST"],
+            },
         ],
     }
 ]
@@ -87,6 +99,18 @@ export const userNavItems: NavSection[] = [
                 title: "Become Host",
                 href: "/user/dashboard/become-host",
                 icon: "Expand", // ✅ String
+                roles: ["USER"],
+            },
+            {
+                title: "Help/Support",
+                href: "/user/dashboard/help",
+                icon: "HandHelping", // ✅ String
+                roles: ["USER"],
+            },
+            {
+                title: "Terms & Condition",
+                href: "/user/dashboard/terms",
+                icon: "ReceiptText", // ✅ String
                 roles: ["USER"],
             },
         ],
